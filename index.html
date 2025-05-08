@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text to Braille Converter</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Text to Braille Translator</h1>
+    <div class="translator-box">
+      <div class="input-section">
+        <label>From (Type or Upload Image):</label>
+        <textarea id="inputText" placeholder="Type here..."></textarea>
+
+        <div class="input-tools">
+          <label for="imageUpload" class="upload-icon">📤 Upload Image</label>
+          <input type="file" id="imageUpload" accept="image/*" style="display: none;" />
+          <div id="imagePreviewContainer" style="margin-top: 10px;">
+            <img id="imagePreview" src="" alt="Uploaded Image Preview" style="max-width: 100%; max-height: 200px; display: none; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);" />
+          </div>
+
+          <button class="icon-button" onclick="speakText()">🔊</button>
+        </div>
+      </div>
+
+      <div class="output-section">
+        <label for="brailleGrade">To (Braille Grade):</label>
+        <select id="brailleGrade">
+          <option value="1">Grade 1</option>
+          <option value="2">Grade 2</option>
+        </select>
+        <div id="brailleOutput" class="braille-output">⠄</div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button onclick="translateToBraille()">Translate</button>
+      <button onclick="exportAsImage()">📄 Export</button>
+      <button id="toggleThemeBtn" onclick="toggleTheme()">Day/Night</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.0.2/dist/tesseract.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
