@@ -93,7 +93,11 @@ function translateToBraille() {
   const output = document.getElementById('brailleOutput');
 
   if (grade === "1") {
-    const braille = [...inputText].map(char => brailleMapGrade1[char] || '⍰').join('');
+    const braille = [...inputText].map(char => {
+  if (char === ' ') return ' '; // explicitly handle space
+  return brailleMapGrade1[char] || '⍰';
+}).join('');
+
     output.innerText = braille;
   } else if (grade === "2") {
     // Split input into words to check for contractions
