@@ -95,7 +95,7 @@ function translateToBraille() {
   if (grade === "1") {
     const braille = [...inputText].map(char => {
   if (char === ' ') return ' '; // explicitly handle space
-  return brailleMapGrade1[char] || '⍰';
+  return brailleMapGrade1[char] || ' ';
 }).join('');
 
     output.innerText = braille;
@@ -107,7 +107,7 @@ function translateToBraille() {
         return brailleMapGrade2[word];
       } else {
         // Fallback to Grade 1 character mapping for each letter
-        return [...word].map(char => brailleMapGrade1[char] || '⍰').join('');
+        return [...word].map(char => brailleMapGrade1[char] || ' ').join('');
       }
     });
     output.innerText = brailleWords.join(' ');
