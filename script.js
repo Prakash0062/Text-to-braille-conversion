@@ -1,4 +1,3 @@
-
 const brailleMapGrade1 = {
   a: "⠁", b: "⠃", c: "⠉", d: "⠙", e: "⠑",
   f: "⠋", g: "⠛", h: "⠓", i: "⠊", j: "⠚",
@@ -94,9 +93,9 @@ function translateToBraille() {
 
   if (grade === "1") {
     const braille = [...inputText].map(char => {
-  if (char === ' ') return ' '; // explicitly handle space
-  return brailleMapGrade1[char] || ' ';
-}).join('');
+      if (char === ' ') return ' '; // explicitly handle space
+      return brailleMapGrade1[char] || ' ';
+    }).join('');
 
     output.innerText = braille;
   } else if (grade === "2") {
@@ -118,8 +117,16 @@ function translateToBraille() {
 
 function speakText() {
   const inputText = document.getElementById('inputText').value;
-  const utterance = new SpeechSynthesisUtterance(inputText);
-  speechSynthesis.speak(utterance);
+  if (!inputText) {
+    alert("Please enter text to speak.");
+    return;
+  }
+  if ('speechSynthesis' in window) {
+    const utterance = new SpeechSynthesisUtterance(inputText);
+    speechSynthesis.speak(utterance);
+  } else {
+    alert("Sorry, your browser does not support speech synthesis.");
+  }
 }
 
 document.getElementById('imageUpload').addEventListener('change', (e) => {
@@ -141,12 +148,16 @@ document.getElementById('imageUpload').addEventListener('change', (e) => {
   });
 });
 
-function exportAsImage() {
-  html2canvas(document.querySelector("#brailleOutput")).then(canvas => {
-    const link = document.createElement('a');
-    link.download = 'braille_output.png';
-    link.href = canvas.toDataURL();
-    link.click();
+function copyBrailleOutput() {
+  const output = document.getElementById('brailleOutput').innerText;
+  if (!output || output === "⠄") {
+    alert("No Braille output to copy.");
+    return;
+  }
+  navigator.clipboard.writeText(output).then(() => {
+    alert("Braille output copied to clipboard!");
+  }).catch(err => {
+    alert("Failed to copy: " + err);
   });
 }
 
